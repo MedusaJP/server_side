@@ -24,6 +24,8 @@ class User extends MY_Controller {
 		$data = $this->User->getAll ();
 		$this->output->set_content_type ( 'application/json' )->set_output ( json_encode ( $data ) );
 	}
+
+
 	public function check_user($arg1) {
 		echo $arg1;
 	}
@@ -34,9 +36,9 @@ class User extends MY_Controller {
 	public function quick_apply() {
 		// 端末識別番号
 		$device_id = $this->input->post ( 'device_id' );
-		$device_id = "hehehehe";
+
+		// エラー判定
 		if (is_null($device_id) || !$device_id) {
-			// パラメータがない
 			$this->output_json(NULL, 100);
 			return;
 		}
@@ -53,6 +55,14 @@ class User extends MY_Controller {
 		$user_data = $this->user->get_by_id($insert_id);
 
 		$this->output_json(array("user" => $user_data));
+	}
+
+	public function get_img()
+	{
+		// ユーザーID
+		$user_id = $this->input->post ( 'user_id' );
+
+		$this->output->set_content_type ( 'jpeg' )->set_output ( file_get_contents ( 'img/Chrysanthemum.jpg' ) );
 	}
 }
 

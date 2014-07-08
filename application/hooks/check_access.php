@@ -11,6 +11,6 @@ class CheckAccess {
 	}
 
 	function check_app_id() {
-		print("chenfeng");
+// TODO
 	}
 }
