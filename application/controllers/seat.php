@@ -8,7 +8,7 @@ class Seat extends MY_Controller {
 		$shop_id = $this->input->post ( 'shop_id' );
 		$freetext = $this->input->post ( 'freetext' );
 		$endtime = $this->input->post ( 'endtime' );
-		// echo $_SERVER["DOCUMENT_ROOT"];
+
 		$this->output->set_content_type ( 'jpeg' )->set_output ( file_get_contents ( 'img/Chrysanthemum.jpg' ) );
 	}
 }
