@@ -21,7 +21,7 @@ class MY_Controller extends CI_Controller {
 	function output_error($error_msg, $result_code = Constant::RESPONSE_CODE_ERROR_UNKOWN) {
 		$output_data = array ();
 		$output_data ["Status"] = $result_code;
-		$output_data ["Result"] = $data;
+		$output_data ["Result"] = $error_msg;
 		$this->output->set_content_type ( 'application/json' )->set_output ( json_encode ( $output_data ) );
 	}
 }

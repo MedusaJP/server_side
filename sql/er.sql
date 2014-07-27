@@ -73,7 +73,7 @@ CREATE TABLE user
 	apply_status int(1) DEFAULT 0 NOT NULL,
 	mailaddress varchar(50) NOT NULL UNIQUE,
 	salt char(20) NOT NULL,
-	password char(64) NOT NULL,
+	password char(32) NOT NULL,
 	img_name varchar(64) DEFAULT 'default.jpg' NOT NULL,
 	img_type varchar(32) DEFAULT 'jpeg' NOT NULL,
 	locked int(1) DEFAULT 0 NOT NULL,

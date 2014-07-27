@@ -74,7 +74,7 @@ class User extends MY_Controller {
 	 */
 	public function check_is_applied($something_id, $flg) {
 		$this->load->model ( 'User_model', 'user' );
-		$user_data = null;
+		$user_data = array ();
 
 		// フラグごとに取得する
 		if ($flg == 1) {
@@ -92,16 +92,17 @@ class User extends MY_Controller {
 			) );
 		}
 
+		$return_data = array ();
 		if (is_null ( $user_data )) {
 			// 存在していない場合
-			$return_date = array ();
-			$return_date ["is_exist"] = false;
+			$return_data ["is_exist"] = false;
 		} else {
 			// 存在していない場合
-			$return_date = array ();
-			$return_date ["is_exist"] = true;
-			$return_date ["user"] = $user_data;
+			$return_data ["is_exist"] = true;
+			$return_data ["user"] = $user_data;
 		}
+
+		$this->output_json_on_succeed ( $return_data );
 	}
 
 	/**
@@ -131,6 +132,7 @@ class User extends MY_Controller {
 		$insert_data = array ();
 		$insert_data ["name"] = $user_name;
 		$insert_data ["device_id"] = $device_id;
+		$insert_data ["mailaddress"] = "";
 		$insert_data ["created_at"] = date ( 'Y-m-d H:i:s' );
 
 		$insert_id = $this->user->insert ( $insert_data );
@@ -148,12 +150,9 @@ class User extends MY_Controller {
 	 *
 	 * @param unknown $user_id
 	 */
-	public function show($user_id) {
-		if (is_null ( $user_id ) || ! $user_id) {
+	public function show($user_id = null) {
+		if (is_null ( $user_id ) || $user_id == "") {
 			$this->output_error ( "パラメータ不正：ユーザーID", Constant::RESPONSE_CODE_ERROR_PAMAMETER );
-			return;
-		} else if (! check_user_exsit ( $user_id )) {
-			$this->output_json ( NULL, 100 );
 			return;
 		}
 
@@ -161,9 +160,14 @@ class User extends MY_Controller {
 		$this->load->model ( 'User_model', 'user' );
 		$user_data = $this->user->get_by_id ( $user_id );
 
-		$this->output_json_on_succeed ( array (
-				"user" => $user_data
-		) );
+		if (is_null ( $user_data )) {
+			$this->output_error ( "このユーザーが存在していません。", Constant::RESPONSE_CODE_ERROR_NOTHING );
+			return;
+		} else {
+			$this->output_json_on_succeed ( array (
+					"user" => $user_data
+			) );
+		}
 	}
 
 	/**
@@ -172,18 +176,20 @@ class User extends MY_Controller {
 	 * @param unknown $user_id
 	 */
 	public function get_img_by_user_id($user_id) {
-		if (is_null ( $user_id ) || ! $user_id) {
+		if (is_null ( $user_id ) || $user_id == "") {
 			$this->output_error ( "パラメータ不正：ユーザーID", Constant::RESPONSE_CODE_ERROR_PAMAMETER );
-			return;
-		} else if (! check_user_exsit ( $user_id )) {
-			$this->output_json ( NULL, 100 );
 			return;
 		}
 		// ユーザー情報を取得する
 		$this->load->model ( 'User_model', 'user' );
 		$user_data = $this->user->get_by_id ( $user_id );
 
-		$this->output->set_content_type ( $user_data ["img_type"] )->set_output ( file_get_contents ( 'img/' + $user_data ["img_name"] ) );
+		// 返却する
+		if (is_null ( $user_data )) {
+			$this->output_error ( "このユーザーが存在していません。", Constant::RESPONSE_CODE_ERROR_NOTHING );
+		} else {
+			$this->output->set_content_type ( $user_data ["img_type"] )->set_output ( file_get_contents ( 'img/' . $user_data ["img_name"] ) );
+		}
 	}
 
 	/**
@@ -221,7 +227,7 @@ class User extends MY_Controller {
 			// ログイン成功
 			$this->output_json_on_succeed ( array (
 					"login_succeeded" => true,
-					"user" => $user_data,
+					"user" => $user_data
 			) );
 		}
 	}
@@ -230,11 +236,7 @@ class User extends MY_Controller {
 	 * テスト
 	 */
 	public function test() {
-		$chen = "chenfeng";
-		$this->load->library ( 'encrypt' );
-		print_r ( $this->encrypt->sha1 ( $chen + "chenfeng" ) );
-		echo "<br>";
-		print_r ( $this->encrypt->encode ( $chen ) );
+		echo "test";
 	}
 
 	/**

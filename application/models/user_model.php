@@ -30,7 +30,8 @@ class User_model extends CI_Model {
 		) );
 
 		if (count ( $query->result_array () ) > 0) {
-			return $query->result_array ();
+			$result_array = $query->result_array ();
+			return $result_array[0];
 		}
 
 		return NULL;
