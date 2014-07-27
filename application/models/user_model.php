@@ -42,7 +42,7 @@ class User_model extends CI_Model {
 	 * @param unknown $user_id
 	 * @return NULL
 	 */
-	function get_by_conditon($cond_arr) {
+	function get_by_column_name($cond_arr) {
 		$query = $this->db->get_where ( 'user', $cond_arr );
 
 		if (count ( $query->result () ) > 0) {

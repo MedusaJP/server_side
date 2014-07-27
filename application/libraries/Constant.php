@@ -6,7 +6,7 @@ class Constant {
 	// データが存在していません
 	const RESPONSE_CODE_ERROR_NOTHING = 100;
 	// パラメータ不正
-	const RESPONSE_CODE_ERROR_PAMAMETER = 300;
+	const RESPONSE_CODE_ERROR_PAMAMETER = 400;
 	// 未知のエラー
 	const RESPONSE_CODE_ERROR_UNKOWN = 999;
 }
