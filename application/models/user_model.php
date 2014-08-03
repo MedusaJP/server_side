@@ -9,7 +9,7 @@ class User_model extends CI_Model {
 	}
 
 	/**
-	 * 挿入するewq
+	 * 挿入する
 	 *
 	 * @param unknown $data
 	 */

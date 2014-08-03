@@ -175,7 +175,7 @@ class User extends MY_Controller {
 	 *
 	 * @param unknown $user_id
 	 */
-	public function get_img_by_user_id($user_id) {
+	public function get_img_by_user_id($user_id = null) {
 		if (is_null ( $user_id ) || $user_id == "") {
 			$this->output_error ( "パラメータ不正：ユーザーID", Constant::RESPONSE_CODE_ERROR_PAMAMETER );
 			return;
@@ -254,7 +254,11 @@ class User extends MY_Controller {
 	 * @param unknown $user_id
 	 * @return boolean
 	 */
-	private function check_user_exsit($user_id) {
+	private function check_user_exsit($user_id = null) {
+		if (is_null ( $user_id ) || $user_id == "") {
+			$this->output_error ( "パラメータ不正：ユーザーID", Constant::RESPONSE_CODE_ERROR_PAMAMETER );
+			return;
+		}
 		$this->load->model ( 'User_model', 'user' );
 		$user_data = $this->user->get_by_id ( $user_id );
 
