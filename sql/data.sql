@@ -1,0 +1,1 @@
+INSERT INTO shop (name, address, lon, lat, hot_tag_str, created_at) values('テスト店舗', '東京都新宿区早稲田早稲田大学', 139.7208, 35.7092, '', NOW())
